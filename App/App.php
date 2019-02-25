@@ -33,10 +33,12 @@ class App
     }
 
     /**
-     *
+     * @throws \Exception
      */
     public function page()
     {
+        $controllerNameReference = $this->controller;
+
         if ($this->controller) {
             $this->controllerName = ucwords($this->controller) . 'Controller';
             $this->controllerName = preg_replace('/[^a-zA-Z]/i', '', $this->controllerName);
@@ -50,13 +52,14 @@ class App
         if (!$this->controller) {
             $this->controller = new HomeController($this);
             $this->controller->index();
+            return;
         }
 
-        if (!file_exists(PATH . '/App/Controllers/' . $this->controllerFile)) {
+        if (!file_exists(PATH . '/App/Src/' . ucwords($controllerNameReference) . '/Controller/' . $this->controllerFile)) {
             throw new \Exception("Página não encontrada.", 404);
         }
 
-        $nomeClasse     = "\\App\\Controllers\\" . $this->controllerName;
+        $nomeClasse     = "\\App\\Src\\" . ucwords($controllerNameReference) . '\\Controller\\' . $this->controllerName;
         $objetoController = new $nomeClasse($this);
 
         if (!class_exists($nomeClasse)) {
@@ -71,9 +74,6 @@ class App
             return;
         }
         throw new \Exception("Página não encontrada.", 404);
-//        print_r($_GET['url']);
-//        $controller = new HomeController();
-//        $controller->index();
     }
 
     public function url () {
@@ -86,9 +86,14 @@ class App
 
             $path = explode('/', $path);
 
-            $this->controller  = $path[0]? $path[0]: null;
-            $this->action      = $path[1]? $path[1]: null;
+            $this->controller  = (isset($path[0]) && !empty($path[0]))? $path[0]: null;
+            $this->action      = (isset($path[1]) && !empty($path[1]))? $path[1]: null;
 
+            if ( isset($path[2]) && !empty($path[2]) ) {
+                unset( $path[0] );
+                unset( $path[1] );
+                $this->params = array_values( $path );
+            }
         }
     }
 

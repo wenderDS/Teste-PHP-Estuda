@@ -15,6 +15,6 @@ class HomeController extends TemplateController
 
     public function index ()
     {
-        return $this->render('Home/View/home');
+        return $this->render('Home/View/index');
     }
 }
