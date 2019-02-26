@@ -8,12 +8,13 @@
 
 namespace App\Src\Produto\Controller;
 
-use App\Src\Template\Controller\TemplateController;
+use App\Src\Base\Controller\Controller;
 
-class ProdutoController extends TemplateController
+class ProdutoController extends Controller
 {
     public function index()
     {
+
         return $this->render('Produto/View/index');
     }
 }

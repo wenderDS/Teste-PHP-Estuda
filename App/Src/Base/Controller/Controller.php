@@ -6,9 +6,9 @@
  * Time: 13:45
  */
 
-namespace App\Src\Template\Controller;
+namespace App\Src\Base\Controller;
 
-abstract class TemplateController
+abstract class Controller
 {
 
     protected $app;
@@ -24,10 +24,10 @@ abstract class TemplateController
     {
         $viewVar   = $this->getViewVar();
 
-        require_once PATH . '/App/Src/Template/View/Layout/header.php';
-        require_once PATH . '/App/Src/Template/View/Layout/navbar.php';
+        require_once PATH . '/App/Src/Base/View/Layout/header.php';
+        require_once PATH . '/App/Src/Base/View/Layout/navbar.php';
         require_once PATH . '/App/Src/' . $view . '.php';
-        require_once PATH . '/App/Src/Template/View/Layout/footer.php';
+        require_once PATH . '/App/Src/Base/View/Layout/footer.php';
     }
 
     public function redirect($view)

@@ -1,6 +1,6 @@
-CREATE DATABASE db_teste;
+CREATE DATABASE dbteste;
 
-USE db_teste;
+USE dbteste;
 
 CREATE TABLE genero (
 	id INT AUTO_INCREMENT PRIMARY KEY,
@@ -12,9 +12,9 @@ CREATE TABLE cliente (
     nome VARCHAR(45) NOT NULL,
     telefone BIGINT(14),
     email VARCHAR(100) NOT NULL,
-    data_nascimento DATE,
-    genero_id INT,
-	CONSTRAINT FK_CLIENTE FOREIGN KEY (genero_id) 
+    dataNascimento DATE,
+    generoId INT,
+	CONSTRAINT FK_CLIENTE FOREIGN KEY (generoId) 
     REFERENCES genero (id) ON DELETE RESTRICT
 ) ENGINE = innodb;
 
@@ -31,26 +31,26 @@ CREATE TABLE situacao (
 
 CREATE TABLE pedido (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    data_pedido DATE NOT NULL,
-    total_itens INT UNSIGNED,
-    valor_total DOUBLE(10,2) UNSIGNED,
-    situacao_id INT NOT NULL,
-    cliente_id INT NOT NULL,
-    CONSTRAINT FK_PEDIDO_SITUACAO FOREIGN KEY (situacao_id) 
+    dataPedido DATE NOT NULL,
+    totalItens INT UNSIGNED,
+    valorTotal DOUBLE(10,2) UNSIGNED,
+    situacaoId INT NOT NULL,
+    clienteId INT NOT NULL,
+    CONSTRAINT FK_PEDIDO_SITUACAO FOREIGN KEY (situacaoId) 
     REFERENCES situacao (id) ON DELETE RESTRICT,
-    CONSTRAINT FK_PEDIDO_CLIENTE FOREIGN KEY (cliente_id) 
+    CONSTRAINT FK_PEDIDO_CLIENTE FOREIGN KEY (clienteId) 
     REFERENCES cliente (id) ON DELETE RESTRICT
 ) ENGINE = innodb;
 
-CREATE TABLE item_pedido (
+CREATE TABLE itemPedido (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    pedido_id INT NOT NULL,
-    produto_id INT NOT NULL,
-    quantidade_produto INT UNSIGNED,
+    pedidoId INT NOT NULL,
+    produtoId INT NOT NULL,
+    quantidadeProduto INT UNSIGNED,
     valor DOUBLE(10,2) UNSIGNED,
-    valor_total DOUBLE(10,2) UNSIGNED,
-    CONSTRAINT FK_ITEM_PEDIDO FOREIGN KEY (pedido_id) 
+    valorTotal DOUBLE(10,2) UNSIGNED,
+    CONSTRAINT FK_ITEM_PEDIDO FOREIGN KEY (pedidoId) 
     REFERENCES pedido (id) ON DELETE RESTRICT,
-    CONSTRAINT FK_ITEM_PRODUTO FOREIGN KEY (produto_id) 
+    CONSTRAINT FK_ITEM_PRODUTO FOREIGN KEY (produtoId) 
     REFERENCES produto (id) ON DELETE RESTRICT
 ) ENGINE = innodb;

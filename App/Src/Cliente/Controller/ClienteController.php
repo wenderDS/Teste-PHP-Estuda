@@ -8,9 +8,9 @@
 
 namespace App\Src\Cliente\Controller;
 
-use App\Src\Template\Controller\TemplateController;
+use App\Src\Base\Controller\Controller;
 
-class ClienteController extends TemplateController
+class ClienteController extends Controller
 {
     public function index()
     {

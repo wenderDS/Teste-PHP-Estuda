@@ -8,9 +8,9 @@
 
 namespace App\Src\Home\Controller;
 
-use App\Src\Template\Controller\TemplateController;
+use App\Src\Base\Controller\Controller;
 
-class HomeController extends TemplateController
+class HomeController extends Controller
 {
 
     public function index ()

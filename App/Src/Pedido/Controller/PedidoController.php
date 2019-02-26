@@ -8,9 +8,9 @@
 
 namespace App\Src\Pedido\Controller;
 
-use App\Src\Template\Controller\TemplateController;
+use App\Src\Base\Controller\Controller;
 
-class PedidoController extends TemplateController
+class PedidoController extends Controller
 {
     public function index()
     {
