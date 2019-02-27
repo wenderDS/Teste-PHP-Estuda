@@ -14,7 +14,7 @@ class App
 {
     private $controller;
     private $action;
-    private $params;
+    private $parameters;
     private $controllerFile;
     public  $controllerName;
 
@@ -67,10 +67,10 @@ class App
         }
 
         if (method_exists($objetoController, $this->action)) {
-            $objetoController->{$this->action}($this->params);
+            $objetoController->{$this->action}($this->parameters);
             return;
         } else if (!$this->action && method_exists($objetoController, 'index')) {
-            $objetoController->index($this->params);
+            $objetoController->index($this->parameters);
             return;
         }
         throw new \Exception("Página não encontrada.", 404);
@@ -92,7 +92,7 @@ class App
             if ( isset($path[2]) && !empty($path[2]) ) {
                 unset( $path[0] );
                 unset( $path[1] );
-                $this->params = array_values( $path );
+                $this->parameters = array_values( $path );
             }
         }
     }

@@ -20,7 +20,7 @@ class Connection
 
         try {
             // cria a conexão
-            $connection = new PDO($pdoParameters, DB_USER, DB_PASS);
+            $connection = new PDO($pdoParameters, DB_USER, DB_PASSWORD);
             // seta o tipo de erro para a exception do modo PDO
             $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             // retorna a instância da conexão

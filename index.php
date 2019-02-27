@@ -11,8 +11,8 @@ require_once  'autoload.php';
 use App\App;
 
 $app = new App();
-try {
+//try {
     $app->page();
-} catch (Exception $e) {
-    throw new \Exception("Erro na aplicação", 500);
-}
+//} catch (Exception $e) {
+//    throw new \Exception("Erro na aplicação", 500);
+//}

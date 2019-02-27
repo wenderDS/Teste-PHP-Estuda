@@ -33,7 +33,7 @@ abstract class Controller
     public function redirect($view)
     {
         header('Location: http://' . APP_HOST . $view);
-        exit;
+        return;
     }
 
     public function getViewVar()
