@@ -72,7 +72,7 @@ class Cliente
 
     public function getDataNascimento()
     {
-        return new DateTime($this->dataNascimento);
+        return $this->dataNascimento;
     }
 
     public function setGeneroId($generoId)

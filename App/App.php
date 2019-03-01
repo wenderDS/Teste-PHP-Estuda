@@ -32,9 +32,6 @@ class App
         $this->url();
     }
 
-    /**
-     * @throws \Exception
-     */
     public function page()
     {
         $controllerNameReference = $this->controller;

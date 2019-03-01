@@ -2,25 +2,17 @@
     <div class="row">
         <div class="row" id="page-heading">
             <div class="col-xs-12 col-sm-6">
-                <h1>Produto > Edição</h1>
+                <h1>Produto > Exclusão</h1>
             </div>
         </div>
 
-        <div class="panel">
+        <div class="panel panel-danger">
 
-            <form action="http://<?php echo APP_HOST; ?>/produto/editar" method="post" name="form_edicao_produto">
+            <form action="http://<?php echo APP_HOST; ?>/produto/delete" method="post" name="form_delete_produto">
                 <div class="panel-body">
                     <input type="hidden" class="form-control" name="id" value="<?php echo $viewVar['produto']->getId(); ?>">
 
-                    <div class="form-group">
-                        <label for="descricao">Descrição</label>
-                        <input type="text" class="form-control" name="descricao" placeholder="" value="<?php echo $viewVar['produto']->getDescricao(); ?>" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="valor">Valor</label>
-                        <input type="text" class="form-control" name="valor" placeholder="" value="<?php echo $viewVar['produto']->getValor(); ?>" required>
-                    </div>
+                    Deseja realmente excluir produto: <?php echo $viewVar['produto']->getDescricao(); ?> ?
 
                 </div>
 

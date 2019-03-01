@@ -12,8 +12,6 @@ use App\Src\Base\Controller\Controller;
 
 class PedidoController extends Controller
 {
-    public function index()
-    {
-        return $this->render('Pedido/View/index');
-    }
+
+
 }

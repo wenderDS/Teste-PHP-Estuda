@@ -72,4 +72,30 @@ class ProdutoController extends Controller
 
         return $this->render('Produto/View/edit');
     }
+
+    public function delete($parameters)
+    {
+        $produtoRepository = new ProdutoRepository();
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $produto = new Produto();
+
+            $produto->setId($_POST['id']);
+
+            $produtoRepository->excluir($produto);
+
+            $this->redirect('/produto');
+        }
+
+        $id         = $parameters[0];
+        $produto    = $produtoRepository->getById($id);
+
+        if (!$produto) {
+            $this->redirect('/produto');
+        }
+
+        self::setViewParam('produto', $produto);
+
+        return $this->render('Produto/View/delete');
+    }
 }
