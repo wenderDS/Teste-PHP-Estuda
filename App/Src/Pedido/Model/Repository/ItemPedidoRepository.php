@@ -3,30 +3,32 @@
  * Created by PhpStorm.
  * User: Mec
  * Date: 28/02/2019
- * Time: 21:43
+ * Time: 22:28
  */
 
-namespace App\Src\Cliente\Model\Repository;
+namespace App\Src\Pedido\Model\Repository;
 
 use App\Src\Base\Repository\Repository;
-use App\Src\Cliente\Model\Entity\Cliente;
+use App\Src\Pedido\Model\Entity\ItemPedido;
+use App\Src\Pedido\Model\Entity\Pedido;
 
-class ClienteRepository extends Repository
+class ItemPedidoRepository extends Repository
 {
     public function getById($id)
     {
         $resultado = $this->select(
             "SELECT 
-                    c.id AS idCliente, 
-                    c.nome AS nomeCliente, 
-                    c.telefone,
-                    c.email, 
-                    c.dataNascimento, 
-                    g.id AS idGenero,
-                    g.nome AS nomeGenero
-                 FROM cliente AS c 
-                 INNER JOIN genero AS g ON g.id = c.generoId
-                 WHERE c.id = $id"
+                    ip.id, 
+                    ip.nome, 
+                    ip.telefone,
+                    ip.email, 
+                    ip.dataNascimento, 
+                    ip.id AS idGenero,
+                    ip.nome AS nomeGenero
+                 FROM itemPedido AS ip
+                 INNER JOIN pedido AS pe ON pe.id = ip.pedidoId
+                 INNER JOIN produto AS pro ON pro.id = ip.produtoId
+                 WHERE ip.id = $id"
         );
 
         $dataSetCliente = $resultado->fetch();
@@ -84,12 +86,28 @@ class ClienteRepository extends Repository
         return $listaClientes;
     }
 
+    public function adicionarTodos(array $produtos, Pedido  $pedido)
+    {
+        $data = [];
+        foreach($produtos as $produto)  {
+            $data[] = [
+                'pedidoId'          => $pedido->getId(),
+                'produtoId'         => $produto['produto'],
+                'quantidadeProduto' => $produto['quantidade'],
+                'valor'             => $produto['valor'],
+                'valorTotal'        => $produto['quantidade'] * $produto['valor']
+            ];
+        }
+
+        $this->insertMultiple('itemPedido', $data);
+    }
+
     public function adicionar(Cliente $cliente)
     {
         try {
             return $this->insert(
-                'cliente',
-                ":nome, :telefone, :email, :dataNascimento, :generoId",
+                'itemPedido',
+                ":, :telefone, :email, :dataNascimento, :generoId",
                 [
                     ':nome'           => $cliente->getNome(),
                     ':telefone'       => $cliente->getTelefone(),
@@ -129,12 +147,12 @@ class ClienteRepository extends Repository
         }
     }
 
-    public function excluir(Cliente $cliente)
+    public function excluir(ItemPedido $itemPedido)
     {
         try {
-            $id = $cliente->getId();
+            $id = $itemPedido->getId();
 
-            return $this->delete('cliente', "id = $id");
+            return $this->delete('itemPedido', "id = $id");
         } catch (\Exception $exception) {
             throw new \Exception('Erro ao excluir.', 500);
         }

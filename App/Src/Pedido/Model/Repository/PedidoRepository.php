@@ -92,10 +92,25 @@ class PedidoRepository extends Repository
         return $listaPedidos;
     }
 
-    public function adicionar(Pedido $pedido)
+    public function adicionar(Pedido &$pedido)
     {
         try {
+            $rows =  $this->insert(
+                'pedido',
+                ":dataPedido, :totalItens, :valorTotal, :situacaoId, :clienteId",
+                [
+                    ':dataPedido'   => $pedido->getDataPedido()->format('Y-m-d          '),
+                    ':totalItens'   => $pedido->getTotalItens(),
+                    ':valorTotal'   => $pedido->getValorTotal(),
+                    ':situacaoId'   => $pedido->getSituacaoId(),
+                    ':clienteId'    => $pedido->getClienteId()
+                ]
+            );
 
+            //Select last insert id
+            $pedido->setId($this->lastIsertId() );
+
+            return $rows;
         } catch (\Exception $exception) {
             throw new \Exception('Erro na gravação de dados.' . $exception->getMessage(), 500);
         }
@@ -104,7 +119,24 @@ class PedidoRepository extends Repository
     public function alterar(Pedido $pedido)
     {
         try {
-
+            return $this->update(
+                'pedido',
+                "
+                        dataPedido = :dataPedido, 
+                        totalItens = :totalItens, 
+                        valorTotal = :valorTotal, 
+                        situacaoId = :situacaoId, 
+                        clienteId = :clienteId
+                 ",
+                [
+                    ':id'           => $pedido->getId(),
+                    ':dataPedido'   => $pedido->getDataPedido(),
+                    ':totalItens'   => $pedido->getTotalItens(),
+                    ':valorTotal'   => $pedido->getValorTotal(),
+                    ':situacaoId'   => $pedido->getSituacaoId(),
+                    ':clienteId'    => $pedido->getClienteId()
+                ],
+                "id = :id");
         } catch (\Exception $exception) {
             throw new \Exception('Erro na gravação de dados.', 500);
         }

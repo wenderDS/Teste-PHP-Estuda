@@ -41,6 +41,8 @@ class Pedido
     public function setDataPedido($dataPedido)
     {
         $this->dataPedido = $dataPedido;
+
+        return $this;
     }
 
     public function getDataPedido()
@@ -51,6 +53,8 @@ class Pedido
     public function setTotalItens($totalItens)
     {
         $this->totalItens = $totalItens;
+
+        return $this;
     }
 
     public function getTotalItens()
@@ -61,6 +65,8 @@ class Pedido
     public function setValorTotal($valorTotal)
     {
         $this->valorTotal = $valorTotal;
+
+        return $this;
     }
 
     public function getValorTotal()
@@ -71,6 +77,8 @@ class Pedido
     public function setSituacaoId($situacaoId)
     {
         $this->situacaoId = $situacaoId;
+
+        return $this;
     }
 
     public function getSituacaoId()
@@ -81,6 +89,8 @@ class Pedido
     public function setClienteId($clienteId)
     {
         $this->clienteId = $clienteId;
+
+        return $this;
     }
 
     public function getClienteId()

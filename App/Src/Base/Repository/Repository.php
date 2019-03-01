@@ -44,6 +44,48 @@ abstract class Repository
         }
     }
 
+    public function lastIsertId()
+    {
+        return  $this->connection->lastInsertId();
+    }
+
+    public function insertMultiple($tableName, $data)
+    {
+        //Will contain SQL s        nippets.
+        $columns = array();
+
+        //Will contain the values that we need to bind.
+        $toBind = array();
+
+        //Get a list of column names to use in the  SQL statement.
+        $columnNames = array_keys($data[0]);
+
+        //Loop through our $data array.
+        foreach($data as $arrayIndex => $row){
+            $params = array();
+            foreach($row as $columnName => $columnValue){
+                $param = ":" . $columnName . $arrayIndex;
+                $params[] = $param;
+                $toBind[$param] = $columnValue;
+            }
+            $columns[] = "(" . implode(", ", $params) . ")";
+        }
+
+        //Construct our SQL statement
+        $sql = "INSERT INTO `$tableName` (" . implode(", ", $columnNames) . ") VALUES " . implode(", ", $columns);
+
+        //Prepare our PDO statement.
+        $stmt = $this->connection->prepare($sql);
+
+        //Bind our values.
+        foreach($toBind as $param => $val){
+            $stmt->bindValue($param, $val);
+        }
+
+        //Execute our statement (i.e. insert the data).
+        return $stmt->execute();
+    }
+
     public function update($table, $cols, $values, $where)
     {
         if (!empty($table) && !empty($cols) && !empty($values) && !empty($where)) {
